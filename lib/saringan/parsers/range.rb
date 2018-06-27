@@ -13,7 +13,7 @@ module Saringan
 
         def to_h(value)
           splitted = split(value)
-          { from: splitted[0], to: splitted[1] }
+          { from: parse_value(splitted[0]), to: parse_value(splitted[1]) }
         end
 
         def split(value)
@@ -23,6 +23,10 @@ module Saringan
 
         def clean(value)
           value.gsub(/^\[/, '').gsub(/\]$/, '')
+        end
+
+        def parse_value(value)
+          value
         end
 
         private

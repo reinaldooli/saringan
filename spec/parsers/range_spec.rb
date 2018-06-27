@@ -25,7 +25,7 @@ describe Saringan::Parsers::Range do
   describe '#splt' do
     it 'should separate range in from/to array' do
       value = '[1|3]'
-      expect(parser.split(value)).to eq([1, 3])
+      expect(parser.split(value)).to eq(["1", "3"])
     end
   end
 end

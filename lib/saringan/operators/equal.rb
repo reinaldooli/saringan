@@ -1,3 +1,5 @@
+require 'saringan/parser'
+
 module Saringan
   module Operators
     class Equal
@@ -7,7 +9,7 @@ module Saringan
       class << self
         def to_h(term)
           splitted = split(term)
-          { "#{splitted[:key]}": Saringan::Parser.parse(splitted[:value]) }
+          { "#{splitted[:key]}": parser.parse(splitted[:value]) }
         end
 
         def to_query(term)
@@ -23,6 +25,12 @@ module Saringan
           splitted = term.split(OP_EQUAL)
           { key: splitted[0], value: splitted[1] }
         end
+
+        private
+
+          def parser
+            Saringan::Parser
+          end
       end
     end
   end
