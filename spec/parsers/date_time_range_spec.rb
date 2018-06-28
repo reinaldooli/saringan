@@ -1,9 +1,10 @@
+# frozen_string_literal: true
 require 'support/spec_helper'
 
 describe Saringan::Parsers::DateTimeRange do
   let(:parser) { Saringan::Parsers::DateTimeRange }
-  let(:from ) { DateTime.strptime('2018-06-01 00:00:00', '%Y-%m-%d %H:%M:%S') }
-  let(:to) { DateTime.strptime('2018-06-30 23:59:59', '%Y-%m-%d %H:%M:%S') }
+  let(:from ) { DateTime.new(2018, 06, 01, 00, 00, 00, DateTime.current.zone) }
+  let(:to) { DateTime.new(2018, 06, 30, 23, 59, 59, DateTime.current.zone) }
 
   describe '#match?' do
     it 'should match date time range value' do
