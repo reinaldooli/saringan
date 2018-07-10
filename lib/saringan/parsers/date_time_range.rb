@@ -1,3 +1,7 @@
+# frozen_string_literal: true
+require 'active_support/core_ext/time'
+require 'active_support/core_ext/date_time'
+
 module Saringan
   module Parsers
     class DateTimeRange < Range
@@ -7,7 +11,11 @@ module Saringan
       class << self
         def split(value)
           splitted = super(value)
-          splitted.map{|part| DateTime.strptime(part, FORMAT)}
+          splitted.map do |part|
+            date = DateTime.strptime(part, FORMAT)
+            DateTime.new date.year, date.month, date.day, date.hour, date.min, \
+              date.sec, DateTime.current.zone
+          end
         end
 
         def clean(value)
