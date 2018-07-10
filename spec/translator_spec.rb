@@ -14,5 +14,15 @@ describe Saringan::Translator do
         expect(translator.translate(query)).to eq({ created_at: from..to })
       end
     end
+
+    context 'for absolute equal values' do
+      context 'and value is string' do
+        let(:query) { 'name::john' }
+
+        it 'translate query string to ruby hash' do
+          expect(translator.translate(query)).to eq({ name: 'john' })
+        end
+      end
+    end
   end
 end
