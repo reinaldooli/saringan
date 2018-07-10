@@ -1,8 +1,6 @@
 # Saringan
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/saringan`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+Translate query strings to activerecord query parameters.
 
 ## Installation
 
@@ -22,22 +20,67 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Use Saringan::Translator to translate query string to activerecord parameters:
 
-## Development
+```ruby
+irb> query = "name::John"
+irb> Saringan::Translator.translate(query)
+{ name: 'John' }
+```
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+### Operators
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+**Obs.:** This is a preliminar version, so others operators will be implemented in future versions.
 
-## Contributing
+#### Equals
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/saringan. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+This handle absolute equals query like "WHERE name = 'John'".
+To do it you must use Saringan equals operator '::'
+
+In URL: http://site.com?query=name::John
+
+In code:
+```ruby
+irb> query = params[:query]
+irb> Saringan::Translator.translate(query)
+{ name: 'John' }
+```
+
+### Parsers
+
+**Obs.:** This is a preliminar version, so others parsers will be implemented in future versions.
+
+#### String Parser
+
+Just pass value without any qualifier
+
+#### Date Time Parser
+
+Pass value using Saringan Date Time qualifier.
+Saringan will parse value to DateTime object. It expect date time in '%Y-%m-%d %H:%M:%S' format, see:
+
+In URL: http://site.com?query=starts_at::dt[2018-06-30 00:00:00]
+
+In code:
+```ruby
+irb> query = params[:query]
+irb> Saringan::Translator.translate(query)
+{ starts_at: DateTime object }
+```
+
+##### Range
+
+Pass value using Saringan range operator '|'
+
+In URL: http://site.com?query=starts_at::dt[2018-06-30 00:00:00|2018-06-30 23:59:59]
+
+In code:
+```ruby
+irb> query = params[:query]
+irb> Saringan::Translator.translate(query)
+{ starts_at: DateTime object..DateTime object }
+```
 
 ## License
 
 The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
-
-## Code of Conduct
-
-Everyone interacting in the Saringan project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/saringan/blob/master/CODE_OF_CONDUCT.md).
