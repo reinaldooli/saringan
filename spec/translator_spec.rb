@@ -24,5 +24,13 @@ describe Saringan::Translator do
         end
       end
     end
+
+    context 'with multiple filters' do
+      let(:query) { 'name::john,age::18' }
+
+      it 'translate query string to ruby rash' do
+        expect(translator.translate(query)).to eq({ name: 'john', age: '18' })
+      end
+    end
   end
 end

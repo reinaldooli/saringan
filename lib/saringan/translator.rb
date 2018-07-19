@@ -5,10 +5,9 @@ module Saringan
     class << self
       def translate(query)
         terms = term.split(query)
-        parsed = terms.map do |term|
-          operator.parse(term)
-        end
-        (parsed.size > 1) ? parsed : parsed.first
+        parsed = {}
+        terms.each{|term| parsed.merge!(operator.parse(term))}
+        parsed
       end
 
       private
