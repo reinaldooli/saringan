@@ -1,1 +1,0 @@
-require 'saringan/operators/equal'

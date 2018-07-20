@@ -1,27 +1,25 @@
-require 'saringan/parsers'
+# frozen_string_literal: true
+# -*- encoding: utf-8 -*-
+
+require 'saringan/parsers/date_time'
 
 module Saringan
   class Parser
     class << self
       def parse(value)
-        return range.to_h(value) if range.match?(value)
-        return datetime_range_parser(value) if date_time_range.match?(value)
+        return date_time.parse(value) if date_time.match?(value)
         value
       end
 
-      def datetime_range_parser(value)
-        values  = date_time_range.to_h(value)
-        values[:from]..values[:to]
+      def build(value)
+        return {value: date_time.clean(value), parser: date_time} if date_time.match?(value)
+        { value: value, parser: nil }
       end
 
       private
 
-        def range
-          Saringan::Parsers::Range
-        end
-
-        def date_time_range
-          Saringan::Parsers::DateTimeRange
+        def date_time
+          Saringan::Parsers::DateTime
         end
     end
   end
