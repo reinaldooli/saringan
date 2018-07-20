@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+# -*- encoding: utf-8 -*-
+
 require 'support/spec_helper'
 
 describe Saringan::Translator do
@@ -5,7 +8,7 @@ describe Saringan::Translator do
 
   describe '#translate' do
     context 'for date time ranges' do
-      let(:query) { 'created_at::dt[2018-06-01 00:00:00|2018-06-30 23:59:59]' }
+      let(:query) { 'created_at:>:dt[2018-06-01 00:00:00~2018-06-30 23:59:59]' }
 
       it 'should translate date time query string to ruby hash' do
         from = DateTime.new(2018, 06, 01, 00, 00, 00, DateTime.current.zone)
@@ -22,6 +25,14 @@ describe Saringan::Translator do
         it 'translate query string to ruby hash' do
           expect(translator.translate(query)).to eq({ name: 'john' })
         end
+      end
+    end
+
+    context 'with multiple filters' do
+      let(:query) { 'name::john,age::18' }
+
+      it 'translate query string to ruby rash' do
+        expect(translator.translate(query)).to eq({ name: 'john', age: '18' })
       end
     end
   end

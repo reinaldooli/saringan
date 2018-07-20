@@ -1,4 +1,4 @@
-# Saringan &middot; [![Build Status](https://travis-ci.org/reinaldooli/saringan.svg?branch=master)](https://travis-ci.org/reinaldooli/saringan) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg?style=square)](https://github.com/reinaldooli/saringan/blob/master/MIT-LICENSE)
+# Saringan &middot; [![Build Status](https://travis-ci.org/reinaldooli/saringan.svg?branch=master)](https://travis-ci.org/reinaldooli/saringan) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg?style=square)](https://github.com/reinaldooli/saringan/blob/master/MIT-LICENSE) [![Gem Version](https://badge.fury.io/rb/saringan.svg)](https://badge.fury.io/rb/saringan)
 
 Translate query strings to activerecord query parameters.
 
