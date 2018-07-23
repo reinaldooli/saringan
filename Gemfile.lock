@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    saringan (0.4.0)
+    saringan (0.4.1)
       activesupport (>= 5.0)
 
 GEM
