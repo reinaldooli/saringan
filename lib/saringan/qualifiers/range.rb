@@ -18,12 +18,10 @@ module Saringan
         def qualify(value, parser)
           cleaned = value.gsub(QL_REPLACER, '')
 
-          if inclusion.match?(value)
-            { type: :in, value: inclusion.qualify(cleaned, parser) }
-          elsif between.match?(value)
+          if between.match?(value)
             { type: :between, value: between.qualify(cleaned, parser) }
           else
-            raise ArgumentError.new('Value is not a range')
+            { type: :in, value: inclusion.qualify(cleaned, parser) }
           end
         end
 
