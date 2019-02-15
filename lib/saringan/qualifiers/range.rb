@@ -1,6 +1,4 @@
 require 'saringan/matcher'
-require 'saringan/qualifiers/inclusion'
-require 'saringan/qualifiers/between'
 
 module Saringan
   module Qualifiers
@@ -15,25 +13,10 @@ module Saringan
           QL_RANGE
         end
 
-        def qualify(value, parser)
-          cleaned = value.gsub(QL_REPLACER, '')
-
-          if between.match?(value)
-            { type: :between, value: between.qualify(cleaned, parser) }
-          else
-            { type: :in, value: inclusion.qualify(cleaned, parser) }
-          end
+        def clean(value)
+          value.gsub(QL_REPLACER,  '')
         end
 
-        private
-
-          def inclusion
-            Saringan::Qualifiers::Inclusion
-          end
-
-          def between
-            Saringan::Qualifiers::Between
-          end
       end
     end
   end

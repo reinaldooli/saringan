@@ -2,15 +2,16 @@
 # -*- encoding: utf-8 -*-
 
 require 'saringan/operator'
+require 'saringan/statement'
 
 module Saringan
   class Translator
     class << self
       def translate(query)
         terms = term.split(query)
-        parsed = {}
-        terms.each{|term| parsed.merge!(operator.parse(term))}
-        parsed
+        terms.map do |t|
+          Saringan::Statement.build(t).to_query
+        end
       end
 
       private

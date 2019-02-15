@@ -19,9 +19,25 @@ describe Saringan::Qualifiers::Between, type: :qualifier do
   end
 
   describe '#qualify' do
-    it 'parse value to array' do
-      value = 'val~val~val'
-      expect(qualifier.qualify(value)).to have(2).items
+    let(:parser) { double('parser') }
+
+    before do
+      allow(parser).to receive(:parser).and_return(1, 10)
     end
+
+    it 'split values in two parts' do
+      value = '1~1~10'
+      instance = qualifier.new(value, parser)
+
+      expect(instance.qualify).to have(2).items
+    end
+
+    it 'split values correctly' do
+      value = '1~10'
+      instance = qualifier.new(value, parser)
+
+      expect(instance.qualify).to eq(['1', '10'])
+    end
+
   end
 end

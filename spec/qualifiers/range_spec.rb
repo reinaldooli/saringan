@@ -28,21 +28,10 @@ describe Saringan::Qualifiers::Range, type: :qualifier do
     end
   end
 
-  describe '#qualify' do
-    context 'for inclusion values' do
-      it 'parse inclusion values as array' do
-        value = 'val; val; val'
-        parsed = qualifier.qualify(value, nil)
-        expect(parsed[:value]).to have(3).items
-      end
-    end
-
-    context 'for between values' do
-      it 'parse between values as from/to hash' do
-        value = 'val~val~val'
-        parsed = qualifier.qualify(value, nil)
-        expect(parsed[:value]).to have(2).items
-      end
+  describe '#clean' do
+    it 'clean range value markup' do
+      value, expected = '[value]', 'value'
+      expect(qualifier.clean(value)).to eq(expected)
     end
   end
 end

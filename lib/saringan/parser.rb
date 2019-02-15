@@ -2,25 +2,24 @@
 # -*- encoding: utf-8 -*-
 
 require 'saringan/parsers/date_time'
+require 'saringan/parsers/date'
+require 'saringan/parsers/string'
 
 module Saringan
   class Parser
+
+    PARSERS = [
+      Saringan::Parsers::DateTime,
+      Saringan::Parsers::Date
+    ]
+
     class << self
-      def parse(value)
-        return date_time.parse(value) if date_time.match?(value)
-        value
-      end
-
       def build(value)
-        return {value: date_time.clean(value), parser: date_time} if date_time.match?(value)
-        { value: value, parser: nil }
-      end
-
-      private
-
-        def date_time
-          Saringan::Parsers::DateTime
+        PARSERS.each do |parser|
+          return parser if parser.match?(value)
         end
+        Saringan::Parsers::String
+      end
     end
   end
 end

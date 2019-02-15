@@ -8,18 +8,29 @@ module Saringan
     class Inclusion
       extend Saringan::Matcher
 
-      QL_INCLUSION = /\;+/
+      MATCHER = /\|+/
+      TYPE = :inclusion
 
-      class << self
-        def qualify(value, parser = nil)
-          splitted = value.split(QL_INCLUSION)
-          parser.nil? ? splitted : splitted.map(&parser)
-        end
-
-        def matcher
-          QL_INCLUSION
-        end
+      def initialize(value, parser)
+        @value = value
+        @parser = parser
+        qualify
       end
+
+      def qualify
+        @values = @value.split(MATCHER).map(&:strip)
+      end
+
+      def value
+        @values.map{|val| @parser.parse(val)}
+      end
+
+      private
+
+        def self.matcher
+          MATCHER
+        end
+
     end
   end
 end

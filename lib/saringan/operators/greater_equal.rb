@@ -1,26 +1,23 @@
-# frozen_string_literal: true
-# -*- encoding: utf-8 -*-
-
 require 'saringan/matcher'
-require 'saringan/statements/equal'
+# require 'saringan/parser'
 
 module Saringan
   module Operators
-    class Equal
+    class GreaterEqual
       extend Saringan::Matcher
 
-      OP_EQUAL = /::/
+      OP_GREATER_EQUAL = />:/
 
       attr_reader :subject, :value
 
       def initialize(term)
-        @subject, @value = term.split(OP_EQUAL, 2)
+        @subject, @value = term.split(OP_GREATER_EQUAL)
       end
 
       private
 
         def self.matcher
-          OP_EQUAL
+          OP_GREATER_EQUAL
         end
     end
   end

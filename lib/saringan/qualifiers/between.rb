@@ -8,18 +8,28 @@ module Saringan
     class Between
       extend Saringan::Matcher
 
-      QL_BETWEEN = /\~+/
+      MATCHER = /\~+/
+      TYPE = :between
 
-      class << self
-        def matcher
-          QL_BETWEEN
-        end
-
-        def qualify(value, parser = nil)
-          splitted = value.split(QL_BETWEEN)[0,2]
-          splitted.map{|v| parser.nil? ? v : parser.parse(v)}
-        end
+      def initialize(value, parser)
+        @value = value
+        @parser = parser
+        qualify
       end
+
+      def qualify
+        @from, @to = @value.split(MATCHER, 2)
+      end
+
+      def value
+        @parser.parse(@from)..@parser.parse(@to)
+      end
+
+      private
+
+        def self.matcher
+          MATCHER
+        end
     end
   end
 end

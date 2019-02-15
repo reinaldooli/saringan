@@ -1,26 +1,24 @@
 # frozen_string_literal: true
 # -*- encoding: utf-8 -*-
 
-require "saringan/operators/equal"
-require "saringan/operators/range"
+require 'saringan/operators/equal'
+require 'saringan/operators/greater'
+require 'saringan/operators/greater_equal'
 
 module Saringan
   class Operator
+
+    OPERATORS = [
+      Saringan::Operators::Equal,
+      Saringan::Operators::GreaterEqual
+    ]
+
     class << self
-      def parse(term)
-        return equal.to_h(term) if equal.match?(term)
-        return range.to_h(term) if range.match?(term)
+      def build(term)
+        OPERATORS.each do |operator|
+          return operator.new(term) if operator.match?(term)
+        end
       end
-
-      private
-
-        def equal
-          Saringan::Operators::Equal
-        end
-
-        def range
-          Saringan::Operators::Range
-        end
     end
   end
 end

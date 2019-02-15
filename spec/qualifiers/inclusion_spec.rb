@@ -8,7 +8,7 @@ describe Saringan::Qualifiers::Inclusion, type: :qualifier do
 
   describe '#match?' do
     it 'matches inclusion value' do
-      value = 'val; val; val'
+      value = 'val| val| val'
       expect(qualifier.match?(value)).to be_truthy
     end
 
@@ -19,9 +19,24 @@ describe Saringan::Qualifiers::Inclusion, type: :qualifier do
   end
 
   describe '#qualify' do
-    it 'parse value to array' do
-      value = 'val;val;val'
-      expect(qualifier.qualify(value)).to have(3).items
+    let(:parser) { double('parser') }
+
+    before do
+      allow(parser).to receive(:parse).and_return('val')
+    end
+
+    it 'parsed value match value size' do
+      value = 'val|val|val'
+      instance = qualifier.new(value, parser)
+
+      expect(instance.qualify).to have(3).items
+    end
+
+    it 'parsed value must match value' do
+      value = 'val|val|val'
+      instance = qualifier.new(value, parser)
+
+      expect(instance.qualify).to eq(['val', 'val', 'val'])
     end
   end
 end
